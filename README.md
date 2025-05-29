@@ -4,6 +4,8 @@
 
 1: Must have authentication and have admin auth
 
+#
+
 - login page
 - need input fields for email and password
 - direct to register page if not user
@@ -13,6 +15,9 @@
 - direct to login if already a user
 
 2: Admin
+
+#
+
 -- Main page/ Dashboard for admin
 
 - must have navbar / sidebar to display Menu
@@ -52,6 +57,9 @@
     - can have profile picture and their task status
 
 3: User
+
+#
+
 -- Home / Dashboard page
 
 - display user menu and user information
@@ -72,6 +80,8 @@
 - user only can edit the process checklist (can be checkbox)
 - if user checklist update, task status can be cheng to in progress or complete.
 - this cheng can update task in admin dashboard.
+
+#
 
 /////////////////////////////////////////////////////////////////////
 Backend folder and file structures
