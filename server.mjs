@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import connectDB from "./db/conn.mjs";
 
 dotenv.config();
 const app = express();
@@ -14,9 +15,16 @@ app.use(
     allowedHeaders: ["Content-type", "Authorization"],
   })
 );
+
+// handle db connection
+connectDB();
+//
 app.use(express.json());
 
 // routes
+// app.use("/api/auth", authRoutes);
+// app.use("/api/tasks", taskRoutes);
+// app.use("/api/users", userRoutes);
 
 // errMiddleware
 
