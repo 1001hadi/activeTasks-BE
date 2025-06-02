@@ -21,3 +21,4 @@
 
 - create user schema
 - create task schema
+  - add sub schema for checklist
