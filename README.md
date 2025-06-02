@@ -6,19 +6,27 @@
 
 ## Build Process =>
 
-1- Start project and install the necessary packages
+1 - Start project and install the necessary packages
 
 - mongoose, express, dotenv, jsonwebtoken,bcryptjs ,cors,multer
 - Files structures: Create folders and files
 - setup the server.mjs and import necessary file and middlewares
 
-2- Data base setup
+2 - Data base setup
 
 - create folder and file to setup Data base with Mongoose
 - call it in server.mjs
 
-3- Setup Schemas
+3 - Setup Schemas
 
 - create user schema
 - create task schema
   - add sub schema for checklist
+
+4 - Create Routes
+
+- start with Authentication "Register and login" users route
+  - generate JWt token based on user ID
+- get user route
+- update user route
+- make sure give description for each routes
