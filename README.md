@@ -36,7 +36,12 @@
 - create admin access middleware
 - add protect middleware to needed route
 - complete the auth controller
-  - check for existing user
-  - check if it has admin role & token
-  - hash the password
-  - return user data (JWT)
+  - Register route controller
+    - check for existing user
+    - check if it has admin role & token
+    - hash the password
+    - return user register data (JWT)
+  - Login route controller
+    - check for valid user (with email)
+    - check if password match with bcrypt
+    - return user login data (JWT)

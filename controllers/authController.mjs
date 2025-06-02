@@ -66,6 +66,28 @@ export const registerUser = async (req, res) => {
 // @access public
 export const loginUser = async (req, res) => {
   try {
+    const { email, password } = req.body;
+    // check for valid user with email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ msg: "Invalid credential!" });
+    }
+
+    // check the password
+    const matchPassword = await bcrypt.compare(password, user.password);
+    if (!matchPassword) {
+      return res.status(401).json({ msg: "Invalid credential!" });
+    }
+
+    // return users data (jwt)
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      profileImage: user.profileImage,
+      token: TokenGenerator(user._id),
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "server error", error: err.msg });
