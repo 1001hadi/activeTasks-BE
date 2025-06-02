@@ -29,9 +29,14 @@
   - generate JWt token based on user ID
   - to get secret key[node -e "console.log(require('crypto').randomBytes(32).toString('he
     x'))"], got this from stack overflow.
-  
 - get user route
 - update user route
 - make sure give description for each routes
 - create protect route middleware
 - create admin access middleware
+- add protect middleware to needed route
+- complete the auth controller
+  - check for existing user
+  - check if it has admin role & token
+  - hash the password
+  - return user data (JWT)

@@ -10,9 +10,9 @@ import { protect } from "../middlewares/authMiddleware.mjs";
 const router = express.Router();
 
 // Authentication
-//user register route
-router.post("/ register", registerUser);
-// user login route
+//user register route (public)
+router.post("/register", registerUser);
+// user login route (public)
 router.post("/login", loginUser);
 // get user profile route
 router.get("/profile", protect, getUserProfile);

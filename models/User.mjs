@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide your first name"],
       trim: true,
-      minLength: [6, "Name can't be less than 6 characters long"],
+      minLength: [3, "Name can't be less than 3 characters long"],
       maxLength: [30, "Name can't be more than 30 characters long"],
     },
     email: {
@@ -38,7 +38,7 @@ const UserSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["admin", "user"],
-      default: "number",
+      default: "user",
     },
     registrationDate: {
       type: Date,
