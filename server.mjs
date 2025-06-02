@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./db/conn.mjs";
+import authRoutes from "./routes/authRoutes.mjs";
 
 dotenv.config();
 const app = express();
@@ -22,7 +23,7 @@ connectDB();
 app.use(express.json());
 
 // routes
-// app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 // app.use("/api/tasks", taskRoutes);
 // app.use("/api/users", userRoutes);
 

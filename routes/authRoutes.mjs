@@ -1,4 +1,11 @@
 import express from "express";
+import {
+  registerUser,
+  loginUser,
+  getUserProfile,
+  editUserProfile,
+} from "../controllers/authController.mjs";
+import { protect } from "../middlewares/authMiddleware.mjs";
 
 const router = express.Router();
 

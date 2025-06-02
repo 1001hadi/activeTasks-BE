@@ -23,10 +23,15 @@
 - create task schema
   - add sub schema for checklist
 
-4 - Create Routes
+4 - Create Routes / middlewares
 
 - start with Authentication "Register and login" users route
   - generate JWt token based on user ID
+  - to get secret key[node -e "console.log(require('crypto').randomBytes(32).toString('he
+    x'))"], got this from stack overflow.
+  
 - get user route
 - update user route
 - make sure give description for each routes
+- create protect route middleware
+- create admin access middleware
