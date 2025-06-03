@@ -116,6 +116,35 @@ export const getUserProfile = async (req, res) => {
 // @access public
 export const editUserProfile = async (req, res) => {
   try {
+    const user = await User.findByIdAndUpdate(req.user.id, {
+      new: true,
+      select: "-password",
+    });
+
+    if (!user) {
+      return res.status(404).json({ msg: "user not found!" });
+    }
+
+    // update the users name and email
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+
+    // update password
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(req.body.password, salt);
+    }
+
+    const updatedUser = await user.save();
+
+    // return updated data
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      token: TokenGenerator(updatedUser._id),
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "server error", error: err.msg });

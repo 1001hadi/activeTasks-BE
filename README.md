@@ -36,6 +36,7 @@
 - create admin access middleware
 - add protect middleware to needed route
 - complete the auth controller
+
   - Register route controller
     - check for existing user
     - check if it has admin role & token
@@ -44,13 +45,28 @@
     - handle error
     -
   - Login route controller
+
     - check for valid user (with email)
     - check if password match with bcrypt
     - return user login data (JWT)
     - handle error
 
   - Get profile route controller
+
     - find user with their ID from (req)
     - check if user exist
     - handle error
-  
+
+  - Edit user profile controller
+
+    - find user with ID
+    - update name, email, password
+    - return the updated data
+    - handle error
+
+  - handle profile image upload
+    - add uploads folder to store added image
+    - add post rout for upload image
+    - add upload file middleware
+      - create file configuration function
+      - create file filter function
