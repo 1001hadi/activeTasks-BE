@@ -1,6 +1,6 @@
 import User from "../models/User.mjs";
 import Task from "../models/Task.mjs";
-import bcrypt from "bcryptjs";
+// import bcrypt from "bcryptjs";
 
 // @desc   get all user (by admin)
 // @route  get /api/users
