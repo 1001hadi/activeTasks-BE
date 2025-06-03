@@ -70,3 +70,5 @@
     - add upload file middleware
       - create file configuration function
       - create file filter function
+      - test on postman/thunderClient 
+      - 
