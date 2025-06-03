@@ -1,5 +1,16 @@
 import express from "express";
 import { adminAuth, protect } from "../middlewares/authMiddleware.mjs";
+import {
+  createTask,
+  editTask,
+  editTaskChecklist,
+  editTaskStatus,
+  getAllTasks,
+  getMainDashboard,
+  getSingleTask,
+  getUserDashboard,
+  removeTask,
+} from "../controllers/taskController.mjs";
 
 const router = express.Router();
 
