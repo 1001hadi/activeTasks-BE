@@ -41,7 +41,16 @@
     - check if it has admin role & token
     - hash the password
     - return user register data (JWT)
+    - handle error
+    -
   - Login route controller
     - check for valid user (with email)
     - check if password match with bcrypt
     - return user login data (JWT)
+    - handle error
+
+  - Get profile route controller
+    - find user with their ID from (req)
+    - check if user exist
+    - handle error
+  

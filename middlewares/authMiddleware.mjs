@@ -9,7 +9,7 @@ export const protect = async (req, res, next) => {
   // how to get token come from stack overflow
   try {
     let token = req.headers.authorization;
-    if (token && token.startsWith("bearer")) {
+    if (token && token.startsWith("Bearer")) {
       token = token.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWTSecret);
       req.user = await User.findById(decoded.id).select("-password");

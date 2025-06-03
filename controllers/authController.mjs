@@ -17,8 +17,9 @@ const TokenGenerator = (userId) => {
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password, profileImage, adminInviteCode } = req.body;
+
     if (!name || !email || !password) {
-      return res.status(400).json({ msg: "please enter all required fields!" });
+      return res.status(400).json({ msg: "all fields required!" });
     }
     // check if user exist
     const userExists = await User.findOne({ email });
@@ -99,6 +100,11 @@ export const loginUser = async (req, res) => {
 // @access public
 export const getUserProfile = async (req, res) => {
   try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ msg: "user not found!" });
+    }
+    res.json(user);
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "server error", error: err.msg });
