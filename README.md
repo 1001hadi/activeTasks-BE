@@ -74,11 +74,12 @@
       - test on postman/thunderClient
       -
 
-4- Create user routes / middlewares
+4- Create user routes
 
     - create routes controller for users routes
     - route must be privet
-      - use middleware
+      - use auth middlewares for admin only duty
+      - test on go with thunderClient / Postman
 
     - create get all users route
       - don't show their password(select)
@@ -93,3 +94,27 @@
       - find user and delete from req.param
       - check if user existed for error handling
       - response with removed user
+
+5- Create task routes
+
+    - create task routes and export them
+    - use auth middlewares for admin only duty
+    - create controller for each route
+
+    - main dashboard route
+
+    - user dashboard route
+
+    - create task route
+
+    - get all tasks for admin only route
+
+    - get task by id route
+
+    - update/ edit task route
+
+    - remove task route
+
+    - edit task status route
+
+    - edit task checklist route
