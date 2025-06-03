@@ -14,12 +14,12 @@ router.get("/", protect, getAllTasks);
 // get specific task route
 router.get("/:id", protect, getSingleTask);
 // edit task route
-router.put("", protect, editTask);
+router.put("/:id", protect, editTask);
 // remove task route
-router.delete("", protect, adminAuth, removeTask);
+router.delete("/:id", protect, adminAuth, removeTask);
 // edit task status
-router.get("", protect, editTaskStatus);
+router.put("/:id/status", protect, editTaskStatus);
 // edit task checklist
-router.get("", protect, editTaskChecklist);
+router.put("/:id/checklist", protect, editTaskChecklist);
 
 export default router;

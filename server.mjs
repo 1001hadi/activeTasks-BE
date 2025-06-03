@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/conn.mjs";
 import authRoutes from "./routes/authRoutes.mjs";
 import userRoutes from "./routes/userRoutes.mjs";
+import taskRoutes from "./routes/taskRoutes.mjs";
 
 dotenv.config();
 const app = express();
@@ -26,6 +27,7 @@ app.use(express.json());
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/tasks", taskRoutes);
 
 // errMiddleware
 
