@@ -75,14 +75,21 @@
       -
 
 4- Create user routes / middlewares
+
     - create routes controller for users routes
     - route must be privet
       - use middleware
+
     - create get all users route
+      - don't show their password(select)
       - add each users task count
       - add users tasks status
 
     - create get specific user route
-    
+      - get specific user with findById
+      - don't show their password(select)
+
     - create delete user route
-      
+      - find user and delete from req.param
+      - check if user existed for error handling
+      - response with removed user
