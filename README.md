@@ -23,7 +23,7 @@
 - create task schema
   - add sub schema for checklist
 
-4 - Create Routes / middlewares
+4 - Create Auth Routes / middlewares
 
 - start with Authentication "Register and login" users route
   - generate JWt token based on user ID
@@ -67,8 +67,22 @@
   - handle profile image upload
     - add uploads folder to store added image
     - add post rout for upload image
+    - write logic on auth controllers
     - add upload file middleware
       - create file configuration function
       - create file filter function
-      - test on postman/thunderClient 
-      - 
+      - test on postman/thunderClient
+      -
+
+4- Create user routes / middlewares
+    - create routes controller for users routes
+    - route must be privet
+      - use middleware
+    - create get all users route
+      - add each users task count
+      - add users tasks status
+
+    - create get specific user route
+    
+    - create delete user route
+      

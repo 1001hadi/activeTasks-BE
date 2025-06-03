@@ -40,10 +40,6 @@ const UserSchema = new mongoose.Schema(
       enum: ["admin", "user"],
       default: "user",
     },
-    registrationDate: {
-      type: Date,
-      default: Date.now,
-    },
   },
 
   { timestamps: true }

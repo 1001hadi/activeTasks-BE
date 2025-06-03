@@ -1,6 +1,7 @@
 import multer from "multer";
 
-// this part of project comes from the my older project.(twitter show case app).
+// this part of project comes from the my older project.(twitter show case app)
+// and the multer documentation
 // storage configuration
 const storage = multer.diskStorage({
   destination: (req, file, cd) => {

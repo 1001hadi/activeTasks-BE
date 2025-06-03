@@ -153,7 +153,7 @@ export const editUserProfile = async (req, res) => {
 
 // @desc   update the user profile
 // @route  post /api/auth/upload-img
-// @access public
+// @access privet
 export const uploadFiles = (req, res) => {
   if (!req.file) {
     return res.status(400).json({ msg: "file not uploaded!" });
