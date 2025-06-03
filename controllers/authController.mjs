@@ -63,7 +63,7 @@ export const registerUser = async (req, res) => {
 };
 
 // @desc   login the user
-// @route  post /api/auth/register
+// @route  post /api/auth/login
 // @access public
 export const loginUser = async (req, res) => {
   try {
@@ -96,8 +96,8 @@ export const loginUser = async (req, res) => {
 };
 
 // @desc   get user profile
-// @route  get /api/auth/register
-// @access public
+// @route  get /api/auth/profile
+// @access privet
 export const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -112,8 +112,8 @@ export const getUserProfile = async (req, res) => {
 };
 
 // @desc   update the user profile
-// @route  put /api/auth/register
-// @access public
+// @route  put /api/auth/profile
+// @access privet
 export const editUserProfile = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.user.id, {
@@ -149,4 +149,19 @@ export const editUserProfile = async (req, res) => {
     console.error(err);
     res.status(500).json({ msg: "server error", error: err.msg });
   }
+};
+
+// @desc   update the user profile
+// @route  post /api/auth/upload-img
+// @access public
+export const uploadFiles = (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ msg: "file not uploaded!" });
+  }
+
+  const imgUrl = `${req.protocol}://${req.get("host")}/uploads/${
+    req.file.filename
+  }`;
+
+  res.status(200).json({ imgUrl });
 };

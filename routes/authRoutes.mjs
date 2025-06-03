@@ -4,6 +4,7 @@ import {
   loginUser,
   getUserProfile,
   editUserProfile,
+  uploadFiles,
 } from "../controllers/authController.mjs";
 import { protect } from "../middlewares/authMiddleware.mjs";
 import { upload } from "../middlewares/uploadFileMiddleware.mjs";
@@ -24,16 +25,6 @@ router.get("/profile", protect, getUserProfile);
 router.put("/profile", protect, editUserProfile);
 
 // upload profile image route
-router.post("/upload-img", upload.single("image"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ msg: "file not uploaded!" });
-  }
-  // got this from my older project
-  const imgUrl = `${req.protocol}://${req.get("host")}/uploads/${
-    req.file.filename
-  }`;
-
-  res.status(200).json({ imgUrl });
-});
+router.post("/upload-img", upload.single("image"), uploadFiles);
 
 export default router;
