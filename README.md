@@ -21,7 +21,7 @@
 
 - create user schema
 - create task schema
-  - add sub schema for checklist
+- add sub schema for checklist
 
 4 - Create Auth Routes / middlewares
 
@@ -37,44 +37,44 @@
 - add protect middleware to needed route
 - complete the auth controller
 
-  - Register route controller
-    - check for existing user
-    - check if it has admin role & token
-    - hash the password
-    - return user register data (JWT)
-    - handle error
+- Register route controller
+  - check for existing user
+  - check if it has admin role & token
+  - hash the password
+  - return user register data (JWT)
+  - handle error
+  -
+- Login route controller
+
+  - check for valid user (with email)
+  - check if password match with bcrypt
+  - return user login data (JWT)
+  - handle error
+
+- Get profile route controller
+
+  - find user with their ID from (req)
+  - check if user exist
+  - handle error
+
+- Edit user profile controller
+
+  - find user with ID
+  - update name, email, password
+  - return the updated data
+  - handle error
+
+- handle profile image upload
+  - add uploads folder to store added image
+  - add post rout for upload image
+  - write logic on auth controllers
+  - add upload file middleware
+    - create file configuration function
+    - create file filter function
+    - test on postman/thunderClient
     -
-  - Login route controller
 
-    - check for valid user (with email)
-    - check if password match with bcrypt
-    - return user login data (JWT)
-    - handle error
-
-  - Get profile route controller
-
-    - find user with their ID from (req)
-    - check if user exist
-    - handle error
-
-  - Edit user profile controller
-
-    - find user with ID
-    - update name, email, password
-    - return the updated data
-    - handle error
-
-  - handle profile image upload
-    - add uploads folder to store added image
-    - add post rout for upload image
-    - write logic on auth controllers
-    - add upload file middleware
-      - create file configuration function
-      - create file filter function
-      - test on postman/thunderClient
-      -
-
-4- Create user routes
+5 - Create user routes
 
     - create routes controller for users routes
     - route must be privet
@@ -95,19 +95,20 @@
       - check if user existed for error handling
       - response with removed user
 
-5- Create task routes
+6 - Create task routes
 
     - create task routes and export them
     - use auth middlewares for admin only duty
     - create controller for each route
     - import controller to taskRoutes
 
-    - main dashboard route
-
-    - user dashboard route
-
     - create task route
-
+      - import the Task schema
+      - destructure needed task variables from req.body
+      - make sure check for assigned to be an array
+      - create task var and assign variables from req.body to it
+      - return task var in response.
+    
     - get all tasks for admin only route
 
     - get task by id route
@@ -119,3 +120,7 @@
     - edit task status route
 
     - edit task checklist route
+
+    - main dashboard route
+
+    - user dashboard route
