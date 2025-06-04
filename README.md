@@ -108,10 +108,23 @@
       - make sure check for assigned to be an array
       - create task var and assign variables from req.body to it
       - return task var in response.
-    
+
     - get all tasks for admin only route
+      - get task status from req.query to track the tasks
+      - create obj to store task status
+      - If status exists, add it to obj
+      - populate task from status obj for admin and user separately
+      - add completed checklist to track completed tasks
+      - count the status summary and return their count
+      - response the status data
+      - handle error
 
     - get task by id route
+      - initialize the task from req.param with id
+      - populate the task
+      - check if task exist
+      - response the task
+      - handle error
 
     - update/ edit task route
 

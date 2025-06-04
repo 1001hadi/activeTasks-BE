@@ -44,9 +44,75 @@ export const createTask = async (req, res) => {
 // @access privet
 export const getAllTasks = async (req, res) => {
   try {
+    const { status } = req.query;
+    let filteredTasks = {};
+
+    // If status exists, add it to filteredTasks, don't return early.
+    if (status) {
+      filteredTasks.status = status;
+    }
+
+    let tasks;
+
+    if (req.user.role === "admin") {
+      tasks = await Task.find(filteredTasks).populate(
+        "assignedTo",
+        "name email profileImage"
+      );
+    } else {
+      tasks = await Task.find({
+        ...filteredTasks,
+        assignedTo: req.user._id,
+      }).populate("assignedTo", "name email profileImage");
+    }
+
+    // add completed checklist
+    tasks = await Promise.all(
+      tasks.map(async (task) => {
+        const completedCount = task.checklist.filter(
+          (item) => item.completed
+        ).length;
+        return { ...task.toObject(), completedChecklistCount: completedCount };
+      })
+    );
+
+    // status counts summary
+    // base query to use in all tasks variables
+    const baseQuery =
+      req.user.role === "admin" ? {} : { assignedTo: req.user._id };
+
+    const allTasks = await Task.countDocuments(baseQuery);
+
+    const pendingTasks = await Task.countDocuments({
+      ...filteredTasks,
+      status: "Pending",
+      ...baseQuery,
+    });
+
+    const inProgressTasks = await Task.countDocuments({
+      ...filteredTasks,
+      status: "Progress",
+      ...baseQuery,
+    });
+
+    const completedTasks = await Task.countDocuments({
+      ...filteredTasks,
+      status: "Complete",
+      ...baseQuery,
+    });
+
+    res.json({
+      tasks,
+      statusSummary: {
+        all: allTasks,
+        pendingTasks,
+        inProgressTasks,
+        completedTasks,
+      },
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: "server error", error: err.msg });
+    res.status(500).json({ msg: "server error", error: err.message });
   }
 };
 
