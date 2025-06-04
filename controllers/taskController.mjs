@@ -121,6 +121,14 @@ export const getAllTasks = async (req, res) => {
 // @access privet
 export const getSingleTask = async (req, res) => {
   try {
+    const task = await Task.findById(req.params.id).populate(
+      "assignedTo",
+      "name email profileImage"
+    );
+
+    if (!task) return res.status(404).json({ msg: "task not exist!" });
+
+    res.json(task);
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "server error", error: err.msg });
