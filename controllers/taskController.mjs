@@ -197,6 +197,28 @@ export const removeTask = async (req, res) => {
 // @access privet
 export const editTaskStatus = async (req, res) => {
   try {
+    const task = await Task.findById(req.params.id);
+
+    if (!task) return res.status(404).json({ msg: "task not exist!" });
+
+    const assignedTask = task.assignedTo.some(
+      (userId) => userId === req.user._id
+    );
+
+    if (!assignedTask && req.user.role !== "admin") {
+      return res.status(404).json({ msg: "you are not authorized to edit" });
+    }
+
+    task.status = req.body.status || task.status;
+
+    if (task.status === "Complete") {
+      task.checklist.forEach((box) => (box.completed = true));
+      task.progress = 100;
+    }
+
+    await task.save();
+
+    res.status(200).json({ msg: "task status edited!", task });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "server error", error: err.msg });

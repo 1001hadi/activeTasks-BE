@@ -144,17 +144,18 @@
     - edit task status route
       - find the task from prams.id
       - check if task existed
-      - assign the property that can be Edit
-      - check the if assignedTo is array
+      - check if assigned task id matched to user id
+      - if not matched and not admin, cant' edit
+      - only admin can edit directly
+      - check if completed, assign it to 100 for progress bar
       - response the edited task
       - handle error
 
     - edit task checklist route
+      - user can't remove or edit only checked!
       - find the task from prams.id
-      - check if task existed
-      - assign the property that can be Edit
-      - check the if assignedTo is array
-      - response the edited task
+      - users only allowed to edit their checklist
+      - response the edited checklist
       - handle error
 
     - main dashboard route
