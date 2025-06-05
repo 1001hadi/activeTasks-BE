@@ -201,6 +201,7 @@ export const editTaskStatus = async (req, res) => {
 
     if (!task) return res.status(404).json({ msg: "task not exist!" });
 
+    // check if task assigned to the user who wants edit task status
     const assignedTask = task.assignedTo.some(
       (userId) => userId === req.user._id
     );
@@ -211,6 +212,7 @@ export const editTaskStatus = async (req, res) => {
 
     task.status = req.body.status || task.status;
 
+    // after task completed progress = to 100
     if (task.status === "Complete") {
       task.checklist.forEach((box) => (box.completed = true));
       task.progress = 100;
@@ -230,9 +232,44 @@ export const editTaskStatus = async (req, res) => {
 // @access privet
 export const editTaskChecklist = async (req, res) => {
   try {
+    const { checklist } = req.body;
+    const task = await Task.findById(req.params.id);
+
+    if (!task) return res.status(404).json({ msg: "task not exist!" });
+
+    // check if task is assigned to user, if not checkbox cant be edited.
+    if (!task.assignedTo.includes(req.user._id) && req.user.role !== "admin") {
+      return res.status(404).json({ msg: "can't edit checklist!" });
+    }
+
+    // replacing with edited checklist
+    task.checklist = checklist;
+
+    // edit progress based on checklist mark
+    const completedCount = task.checklist.filter((box) => box.completed).length;
+    const totalBoxes = task.checklist.length;
+    task.progress =
+      totalBoxes > 0 ? Math.round((completedCount / totalBoxes) * 100) : 0;
+
+    // show complete if all boxes checked
+    task.status =
+      task.progress === 100
+        ? "Complete"
+        : task.progress > 0
+        ? "Progress"
+        : "Pending";
+
+    await task.save();
+
+    const editedTask = await Task.findById(req.params.id).populate(
+      "assignedTo",
+      "name email profileImage"
+    );
+
+    res.status(200).json({ msg: "checklist edited!", task: editedTask });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: "server error", error: err.msg });
+    res.status(500).json({ msg: "server error", error: err.message });
   }
 };
 

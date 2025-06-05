@@ -152,10 +152,13 @@
       - handle error
 
     - edit task checklist route
-      - user can't remove or edit only checked!
+      - must have dynamic calculation of checklist for progress
+      - user can't remove only edit checklist!
       - find the task from prams.id
       - users only allowed to edit their checklist
-      - response the edited checklist
+      - edit progress after checklist updated!
+      - task must show completed when all checklist marked
+      -  save and response the edited checklist
       - handle error
 
     - main dashboard route
