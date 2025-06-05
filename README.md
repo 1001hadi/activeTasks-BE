@@ -173,6 +173,7 @@
     - user dashboard route
       - get data(task) for logged in user
       - get user specific tasks
+      - get task percentage by status
       - get user total status
       - get user task priority levels
       - get user recent task (5 or 10)
