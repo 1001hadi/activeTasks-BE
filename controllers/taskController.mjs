@@ -166,7 +166,7 @@ export const editTask = async (req, res) => {
 
     const editedTask = await taskToEdit.save();
 
-    res.status(200).json("task updated!", editTask);
+    res.status(200).json("task updated!", editedTask);
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "server error", error: err.msg });
