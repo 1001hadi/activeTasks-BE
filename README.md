@@ -162,5 +162,12 @@
       - handle error
 
     - main dashboard route
+      - ge total of status
+      - include all status
+      - handle status percentage and add total count
+      - get all priority levels
+      - get recent tasks(5 or 10)
+      - select needed properties
+
 
     - user dashboard route

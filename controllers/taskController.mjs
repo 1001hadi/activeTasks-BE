@@ -1,4 +1,5 @@
 import Task from "../models/Task.mjs";
+import mongoose from "mongoose";
 
 // @desc   create new task (admin)
 // @route  post /api/tasks
@@ -278,6 +279,62 @@ export const editTaskChecklist = async (req, res) => {
 // @access privet (admin)
 export const getMainDashboard = async (req, res) => {
   try {
+    // fetch status
+    const totalTasks = await Task.countDocuments();
+    const pendingTasks = await Task.countDocuments({ status: "Pending" });
+    const completedTasks = await Task.countDocuments({ status: "Complete" });
+    const overDueTasks = await Task.countDocuments({
+      status: { $ne: "Complete" },
+      dueDate: { $lt: new Date() },
+    });
+
+    // including all status
+    // got hint from stack overFlow in this section
+    const allTaskStatus = ["Pending", "Progress", "Complete"];
+    const taskPercentageRow = await Task.aggregate([
+      { $group: { _id: "$status", count: { $sum: 1 } } },
+    ]);
+    const taskPercentage = allTaskStatus.reduce((acc, status) => {
+      // remove spaces from res keys
+      const formattedKey = status.replace(/\s+/g, "");
+      acc[formattedKey] =
+        taskPercentageRow.find((task) => task._id === status)?.count || 0;
+      return acc;
+    }, {});
+    // add total to taskPercentage
+    taskPercentage["All"] = totalTasks;
+
+    // add all priority level
+    // got hint from stack overFlow in this section
+    const allTaskPriority = ["Low", "Medium", "High"];
+    const taskPriorityLevelsRow = await Task.aggregate([
+      { $group: { _id: "$priority", count: { $sum: 1 } } },
+    ]);
+    const taskPriorityLevels = allTaskPriority.reduce((acc, priority) => {
+      acc[priority] =
+        taskPriorityLevelsRow.find((task) => task._id === priority)?.count || 0;
+      return acc;
+    }, {});
+
+    //get recent tasks
+    const recentTasks = await Task.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("title status priority dueDate, createdAt");
+
+    res.status(200).json({
+      statistics: {
+        totalTasks,
+        pendingTasks,
+        completedTasks,
+        overDueTasks,
+      },
+      charts: {
+        taskPercentage,
+        taskPriorityLevels,
+      },
+      recentTasks,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "server error", error: err.msg });
