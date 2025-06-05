@@ -127,12 +127,35 @@
       - handle error
 
     - update/ edit task route
+      - find the task from prams.id
+      - check if task existed
+      - assign the property that can be Edit
+      - check the if assignedTo is array
+      - response the edited task
+      - handle error
 
     - remove task route
+      - find the task from prams.id
+      - check if the task exist
+      - remove the task and response
+      - handle error
+
 
     - edit task status route
+      - find the task from prams.id
+      - check if task existed
+      - assign the property that can be Edit
+      - check the if assignedTo is array
+      - response the edited task
+      - handle error
 
     - edit task checklist route
+      - find the task from prams.id
+      - check if task existed
+      - assign the property that can be Edit
+      - check the if assignedTo is array
+      - response the edited task
+      - handle error
 
     - main dashboard route
 

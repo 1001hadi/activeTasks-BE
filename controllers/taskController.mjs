@@ -47,11 +47,13 @@ export const getAllTasks = async (req, res) => {
     const { status } = req.query;
     let filteredTasks = {};
 
-    // If status exists, add it to filteredTasks, don't return early.
+    // If status exists, add it to filteredTasks.
     if (status) {
       filteredTasks.status = status;
     }
 
+    // display all task only for admin,
+    // display assigned task by id fro users
     let tasks;
 
     if (req.user.role === "admin") {
@@ -140,6 +142,31 @@ export const getSingleTask = async (req, res) => {
 // @access privet
 export const editTask = async (req, res) => {
   try {
+    const taskToEdit = await Task.findByIdAndUpdate(req.params.id, {
+      new: true,
+    });
+
+    if (!taskToEdit) return res.status(404).json({ msg: "task not exist!" });
+
+    taskToEdit.title = req.body.title || taskToEdit.title;
+    taskToEdit.description = req.body.description || taskToEdit.description;
+    taskToEdit.priority = req.body.priority || taskToEdit.priority;
+    taskToEdit.dueDate = req.body.dueDate || taskToEdit.dueDate;
+    taskToEdit.checklist = req.body.checklist || taskToEdit.checklist;
+    taskToEdit.attachments = req.body.attachments || taskToEdit.attachments;
+
+    if (req.body.assignedTo) {
+      if (!Array.isArray(req.body.assignedTo)) {
+        return res
+          .status(400)
+          .json({ msg: "assignedTo must be array of users id" });
+      }
+      taskToEdit.assignedTo = req.body.assignedTo;
+    }
+
+    const editedTask = await taskToEdit.save();
+
+    res.status(200).json("task updated!", editTask);
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "server error", error: err.msg });
