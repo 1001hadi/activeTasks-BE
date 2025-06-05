@@ -148,6 +148,7 @@ export const editTask = async (req, res) => {
 
     if (!taskToEdit) return res.status(404).json({ msg: "task not exist!" });
 
+    // assign what can be Edit
     taskToEdit.title = req.body.title || taskToEdit.title;
     taskToEdit.description = req.body.description || taskToEdit.description;
     taskToEdit.priority = req.body.priority || taskToEdit.priority;
@@ -155,6 +156,7 @@ export const editTask = async (req, res) => {
     taskToEdit.checklist = req.body.checklist || taskToEdit.checklist;
     taskToEdit.attachments = req.body.attachments || taskToEdit.attachments;
 
+    // make sure the assignTo be an array
     if (req.body.assignedTo) {
       if (!Array.isArray(req.body.assignedTo)) {
         return res
@@ -178,9 +180,15 @@ export const editTask = async (req, res) => {
 // @access privet
 export const removeTask = async (req, res) => {
   try {
+    const taskToRemove = await Task.findByIdAndDelete(req.params.id);
+
+    if (!taskToRemove) return res.status(404).json({ msg: "task not exist!" });
+
+    await taskToRemove.deleteOne();
+    res.json({ msg: "task has been removed!" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: "server error", error: err.msg });
+    res.status(500).json({ msg: "server error", error: err.message });
   }
 };
 
