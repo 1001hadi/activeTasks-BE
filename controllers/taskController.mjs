@@ -124,17 +124,25 @@ export const getAllTasks = async (req, res) => {
 // @access privet
 export const getSingleTask = async (req, res) => {
   try {
-    const task = await Task.findById(req.params.id).populate(
+    const taskId = req.params.id;
+    // // // this part added after bug comes up!!!
+    // if (!mongoose.Types.ObjectId.isValid(taskId)) {
+    //   return res.status(400).json({ msg: `Invalid task id format  ${taskId}` });
+    // }
+
+    const task = await Task.findById(taskId).populate(
       "assignedTo",
       "name email profileImage"
     );
 
-    if (!task) return res.status(404).json({ msg: "task not exist!" });
+    if (!task) {
+      return res.status(404).json({ msg: "Task not found!" });
+    }
 
     res.json(task);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: "server error", error: err.msg });
+    res.status(500).json({ msg: "server error", error: err.message });
   }
 };
 
@@ -347,6 +355,10 @@ export const getMainDashboard = async (req, res) => {
 // @access privet
 export const getUserDashboard = async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ msg: "Unauthorized: User not found" });
+    }
+
     const userId = req.user._id;
 
     // get user specific task + status
