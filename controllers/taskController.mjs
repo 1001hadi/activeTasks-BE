@@ -284,6 +284,7 @@ export const getMainDashboard = async (req, res) => {
     const pendingTasks = await Task.countDocuments({ status: "Pending" });
     const completedTasks = await Task.countDocuments({ status: "Complete" });
     const overDueTasks = await Task.countDocuments({
+      // like this mongoDB operator :)
       status: { $ne: "Complete" },
       dueDate: { $lt: new Date() },
     });

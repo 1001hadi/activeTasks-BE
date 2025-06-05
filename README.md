@@ -168,6 +168,12 @@
       - get all priority levels
       - get recent tasks(5 or 10)
       - select needed properties
-
+      - handle error
 
     - user dashboard route
+      - get data(task) for logged in user
+      - get user specific tasks
+      - get user total status
+      - get user task priority levels
+      - get user recent task (5 or 10)
+      - response and handle error
