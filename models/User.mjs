@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema(
       //     "Password must contain 8 characters including: 1 upper case,1 number and 1 special characters(#,?,!) ",
       //   ],
     },
-    profileImage: {
+    profileImageUrl: {
       type: String,
       default: null,
     },

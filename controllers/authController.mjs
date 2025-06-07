@@ -16,7 +16,8 @@ const TokenGenerator = (userId) => {
 // @access public
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, profileImage, adminInviteCode } = req.body;
+    const { name, email, password, profileImageUrl, adminInviteCode } =
+      req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ msg: "all fields required!" });
@@ -44,7 +45,7 @@ export const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      profileImage,
+      profileImageUrl,
       role,
     });
     // return user data  (jwt)
@@ -53,7 +54,7 @@ export const registerUser = async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
-      profileImage: user.profileImage,
+      profileImageUrl: user.profileImageUrl,
       token: TokenGenerator(user._id),
     });
   } catch (err) {
@@ -86,7 +87,7 @@ export const loginUser = async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
-      profileImage: user.profileImage,
+      profileImageUrl: user.profileImageUrl,
       token: TokenGenerator(user._id),
     });
   } catch (err) {
