@@ -10,6 +10,7 @@ export const getUsers = async (req, res) => {
     const users = await User.find({ role: "user" }).select("-password");
 
     // add users task count
+    // help from stack overflow help
     const usersTasksCount = await Promise.all(
       users.map(async (user) => {
         const pendingTask = await Task.countDocuments({
@@ -20,12 +21,12 @@ export const getUsers = async (req, res) => {
           assignedTo: user._id,
           status: "Progress",
         });
-        const completedTask = await Task.countDocuments({
+        const completeTask = await Task.countDocuments({
           assignedTo: user._id,
-          status: "Completed",
+          status: "Complete",
         });
-        // _doc comes from stack overflow help
-        return { ...user._doc, pendingTask, progressTask, completedTask };
+
+        return { ...user._doc, pendingTask, progressTask, completeTask };
       })
     );
     res.json(usersTasksCount);
