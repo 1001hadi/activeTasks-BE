@@ -125,11 +125,6 @@ export const getAllTasks = async (req, res) => {
 export const getSingleTask = async (req, res) => {
   try {
     const taskId = req.params.id;
-    // // // this part added after bug comes up!!!
-    // if (!mongoose.Types.ObjectId.isValid(taskId)) {
-    //   return res.status(400).json({ msg: `Invalid task id format  ${taskId}` });
-    // }
-
     const task = await Task.findById(taskId).populate(
       "assignedTo",
       "name email profileImage"
@@ -298,7 +293,6 @@ export const getMainDashboard = async (req, res) => {
     });
 
     // including all status
-    // got hint from stack overFlow in this section
     const allTaskStatus = ["Pending", "Progress", "Complete"];
     const taskPercentageRow = await Task.aggregate([
       { $group: { _id: "$status", count: { $sum: 1 } } },
@@ -314,7 +308,6 @@ export const getMainDashboard = async (req, res) => {
     taskPercentage["All"] = totalTasks;
 
     // add all priority level
-    // got hint from stack overFlow in this section
     const allTaskPriority = ["Low", "Medium", "High"];
     const taskPriorityLevelsRow = await Task.aggregate([
       { $group: { _id: "$priority", count: { $sum: 1 } } },
@@ -379,7 +372,6 @@ export const getUserDashboard = async (req, res) => {
 
     // get task percentage by status
     const userTaskStatus = ["Pending", "Progress", "Complete"];
-    // this part come from main dashboard controller and stack overflow
     const userTaskPercentageRow = await Task.aggregate([
       { $match: { assignedTo: userId } },
       { $group: { _id: "$status", count: { $sum: 1 } } },
@@ -396,7 +388,6 @@ export const getUserDashboard = async (req, res) => {
     userTaskPercentage["All"] = totalTasks;
 
     // add all priority level
-    // got hint from stack overFlow in this section
     const userTaskPriority = ["Low", "Medium", "High"];
     const userTaskPriorityLevelsRow = await Task.aggregate([
       { $match: { assignedTo: userId } },

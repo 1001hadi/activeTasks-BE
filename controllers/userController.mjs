@@ -1,6 +1,5 @@
 import User from "../models/User.mjs";
 import Task from "../models/Task.mjs";
-// import bcrypt from "bcryptjs";
 
 // @desc   get all user (by admin)
 // @route  get /api/users
@@ -10,7 +9,6 @@ export const getUsers = async (req, res) => {
     const users = await User.find({ role: "user" }).select("-password");
 
     // add users task count
-    // help from stack overflow help
     const usersTasksCount = await Promise.all(
       users.map(async (user) => {
         const pendingTask = await Task.countDocuments({

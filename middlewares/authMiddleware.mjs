@@ -6,7 +6,6 @@ dotenv.config();
 
 // protect routes middleware
 export const protect = async (req, res, next) => {
-  // how to get token come from stack overflow
   try {
     let token = req.headers.authorization;
     if (token && token.startsWith("Bearer")) {
